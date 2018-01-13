@@ -19,7 +19,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../bower_components/neon-animation/web-animations.html">
 <link rel="import" href="../bower_components/web-animations-js/web-animations.min.js">
-
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="poly-rn4">
@@ -36,43 +36,114 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="circle">4</div>
       <h1>Personal Details</h1>
       <div>
-        <paper-input required auto-validate error-message="Enter value" always-float-label label="Floating label"></paper-input>
-            <paper-input label="username">
+          <iron-form><form>
+        <paper-input id="fName" required auto-validate error-message="Enter value" always-float-label label="Floating label" value="{{fName}}">
+
+        </paper-input>
+            <!--<paper-input label="username">
             <iron-icon icon="mail" slot="prefix"></iron-icon>
             <div slot="suffix">@email.com</div>
-        </paper-input>
+        </paper-input>-->
       </div>
     <div>
-        <paper-dropdown-menu label="Dinosaurs">
+        <paper-dropdown-menu id="ddValue">
   <paper-listbox slot="dropdown-content" selected="1">
-    <paper-item>Amar</paper-item>
-    <paper-item>Akbar</paper-item>
-    <paper-item>Antony</paper-item>
+       <template is="dom-repeat" items="{{ddValue}}">        
+      <paper-item value="{{item}}">{{item}}</paper-item>
+    </template>
     
   </paper-listbox>
 </paper-dropdown-menu>   
     </div>
     
-<paper-checkbox class="styled">
+<paper-checkbox id="checkboxVal" checked="{{checkboxVal}}" class="styled">
   Checkbox
   <span class="subtitle">
 
   </span>
 </paper-checkbox>
-<paper-radio-group selected="small" allow-empty-selection>
-  <paper-radio-button name="small">Small</paper-radio-button>
+<paper-radio-group id="radioGp">
+  <!--<paper-radio-button name="small">Small</paper-radio-button>
   <paper-radio-button name="medium">Medium</paper-radio-button>
   <paper-radio-button name="large">Large</paper-radio-button>
+  -->
+  <template is="dom-repeat" items="{{radioGp}}">
+      <paper-radio-button name="{{item}}">{{item}}</paper-radio-button>
+  </template>
 </paper-radio-group>
 
-<paper-button class="pink">link</paper-button>
+<paper-button class="pink" on-click="submitDetailForm">Submit</paper-button>
       
     </div>
+    <iron-ajax
+    auto
+    url="https://jsonplaceholder.typicode.com/posts/1"
+    params='{"part":"snippet", "q":"polymer", "key": "YOUTUBE_API_KEY", "type": "video"}'
+    handle-as="json"
+    on-response="handleResponse"
+    debounce-duration="300"></iron-ajax>
+    </form></iron-form>
   </template>
 
   <script>
     class PolyRn4 extends Polymer.Element {
-      static get is() { return 'poly-rn4'; }
+        
+      static get is() { 
+          //fName
+          return 'poly-rn4';
+     }
+      static get properties() {
+      return {
+        
+        fName: {
+          type: String,
+          value:"Vijay"
+        },
+        ddValue: {
+            type:Array,
+            value:["dd1","dd2","dd3"]
+            //defaultValue:
+        },
+        checkboxVal:{
+            type:Boolean,
+            value:true
+        },
+        radioGp:{
+            type:Object,
+            // value:{
+            //     {'id':'1','value':'Small'}
+            // ,{'id':'1','value':'Small'}
+            // ,{'id':'1','value':'Small'}}
+            value:[
+                // {'id':'1','value':'Small'},
+                // {'id':'2','value':'Medi'},
+                // {'id':'3','value':'Lg'}
+                'Small','Medium','Large'
+            ]
+        },
+        
+        //defaultValue
+      }
+    }
+    submitDetailForm(){
+        let firstName=this.$.fName.value;
+        let ddValue=this.$.ddValue.value;
+        let checkBoxVal=this.$.checkboxVal.checked;
+        let radioGpValue=this.$.radioGp.selected;
+            console.log(this.$.fName.value);
+            console.log(this.$.ddValue.value);
+            console.log(this.$.checkboxVal.checked);    
+            console.log(this.$.radioGp.selected);
+        let obj={
+            userName:firstName,
+            dropdownValue:ddValue,
+            checkcbval:checkBoxVal,
+            radioGroupValue:radioGpValue
+        }
+    }
+    handleResponse(response){
+        console.log(response.detail.__data.response);
+    }
     }
 
     window.customElements.define(PolyRn4.is, PolyRn4);

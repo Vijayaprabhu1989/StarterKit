@@ -23,7 +23,9 @@
     "neon-animation": "PolymerElements/neon-animation#^2.1.0",
     "web-animations-js": "^2.3.1",
     "paper-listbox": "PolymerElements/paper-listbox#^2.0.0",
-    "paper-item": "PolymerElements/paper-item#^2.0.0"
+    "paper-item": "PolymerElements/paper-item#^2.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^2.0.8",
+    "vaadin-grid": "vaadin/vaadin-grid#^4.1.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"
