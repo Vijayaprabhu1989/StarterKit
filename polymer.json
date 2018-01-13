@@ -1,0 +1,33 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/my-app.html",
+  "fragments": [
+    "src/poly-rn1.html",
+    "src/poly-rn2.html",
+    "src/poly-rn3.html",
+    "src/poly-rn4.html",
+    "src/poly-rn404.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "images/**/*"
+  ],
+  "extraDependencies": [
+    "manifest.json",
+    "bower_components/webcomponentsjs/*.js"
+  ],
+  "lint": {
+    "rules": ["polymer-2"]
+  },
+  "builds": [
+    {
+      "preset": "es5-bundled"
+    },
+    {
+      "preset": "es6-bundled"
+    },
+    {
+      "preset": "es6-unbundled"
+    }
+  ]
+}
